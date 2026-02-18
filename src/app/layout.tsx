@@ -17,7 +17,12 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: "Alain Pascal LINJOUOM | Portfolio",
-  description: "Senior Software Engineer & Graphic Designer Portfolio",
+  description: "Software Engineer & Graphic Designer Portfolio — Douala, Cameroon",
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({

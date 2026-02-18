@@ -84,24 +84,38 @@ const engineerTechGroups = [
     },
 ]
 
+// ── Custom PNG icons for tools not in Devicons ───────────────────────────
+function PngIcon({ src, alt, size = 26 }: { src: string; alt: string; size?: number }) {
+    return (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+            src={src}
+            alt={alt}
+            width={size}
+            height={size}
+            style={{ display: "block", objectFit: "contain", flexShrink: 0 }}
+        />
+    )
+}
+
 const designerTools = [
-    { name: "coreldraw", variant: "original", label: "CorelDraw", cat: "Vector", pct: 95 },
-    { name: "photoshop", variant: "original", label: "Photoshop", cat: "Photo", pct: 65 },
-    { name: "illustrator", variant: "original", label: "Illustrator", cat: "Vector", pct: 65 },
-    { name: "figma", variant: "original", label: "Figma", cat: "UI/UX", pct: 65 },
-    { name: "xd", variant: "original", label: "Adobe XD", cat: "UI/UX", pct: 70 },
-    { name: "lensstudio", variant: "original", label: "SnapChat Lens Studio", cat: "Lens", pct: 55 },
-    { name: "capcut", variant: "original", label: "CapCut", cat: "Video", pct: 60 },
-    { name: "aftereffects", variant: "original", label: "After Effects", cat: "Motion", pct: 55 },
-    { name: "premierepro", variant: "original", label: "Premiere Pro", cat: "Video", pct: 60 },
+    { name: "coreldraw", variant: "original", label: "CorelDraw", cat: "Vector", pct: 95, customIcon: <PngIcon src="/icons/logo_coreldraw.png" alt="CorelDraw" /> },
+    { name: "photoshop", variant: "original", label: "Photoshop", cat: "Photo", pct: 65, customIcon: null },
+    { name: "illustrator", variant: "original", label: "Illustrator", cat: "Vector", pct: 65, customIcon: null },
+    { name: "figma", variant: "original", label: "Figma", cat: "UI/UX", pct: 65, customIcon: null },
+    { name: "xd", variant: "original", label: "Adobe XD", cat: "UI/UX", pct: 70, customIcon: null },
+    { name: "lensstudio", variant: "original", label: "Lens Studio", cat: "AR/Lens", pct: 55, customIcon: <PngIcon src="/icons/logo_snapchat.png" alt="Snapchat Lens Studio" /> },
+    { name: "capcut", variant: "original", label: "CapCut", cat: "Video", pct: 60, customIcon: <PngIcon src="/icons/logo_capcut.png" alt="CapCut" /> },
+    { name: "aftereffects", variant: "original", label: "After Effects", cat: "Motion", pct: 55, customIcon: null },
+    { name: "premierepro", variant: "original", label: "Premiere Pro", cat: "Video", pct: 60, customIcon: null },
 ]
 
 // ── Skill card with progress bar ───────────────────────────────────────────
 function SkillCard({
-    name, variant, label, tag, pct, groupColor, lang, delay,
+    name, variant, label, tag, pct, groupColor, lang, delay, customIcon,
 }: {
     name: string; variant: string; label: string; tag: string | null; pct: number;
-    groupColor: string; lang: string; delay: number;
+    groupColor: string; lang: string; delay: number; customIcon?: React.ReactNode;
 }) {
     const color = levelColor(pct)
     const lvl = levelLabel(pct, lang)
@@ -116,7 +130,9 @@ function SkillCard({
             style={{ background: "var(--bg-card)", border: "1px solid var(--border)" }}
         >
             {/* Icon */}
-            <DevIcon name={name} variant={variant} size={26} title={label} />
+            {customIcon
+                ? <span style={{ display: "block", width: 26, height: 26, flexShrink: 0 }}>{customIcon}</span>
+                : <DevIcon name={name} variant={variant} size={26} title={label} />}
 
             {/* Info */}
             <div className="flex-1 min-w-0">
@@ -233,6 +249,7 @@ export function Skills() {
                                     groupColor="var(--accent)"
                                     lang={lang}
                                     delay={ti * 0.05}
+                                    customIcon={tool.customIcon}
                                 />
                             ))}
                         </div>

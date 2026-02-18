@@ -1,26 +1,202 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* ============================================
+   ENGINEER MODE (DEFAULT - DARK)
+   ============================================ */
+:root,
+[data-mode="engineer"] {
+  --bg: #0a0e1a;
+  --bg-secondary: #0d1220;
+  --bg-card: #111827;
+  --bg-card-hover: #1a2235;
+  --fg: #e2e8f0;
+  --fg-muted: #64748b;
+  --fg-subtle: #334155;
+  --accent: #3b82f6;
+  --accent-hover: #2563eb;
+  --accent-glow: rgba(59, 130, 246, 0.15);
+  --border: #1e293b;
+  --border-accent: #3b82f6;
+  --tag-bg: #1e293b;
+  --tag-fg: #94a3b8;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ============================================
+   DESIGNER MODE
+   ============================================ */
+[data-mode="designer"] {
+  --bg: #0d0d14;
+  --bg-secondary: #111118;
+  --bg-card: #16161f;
+  --bg-card-hover: #1e1e2a;
+  --fg: #f0eeff;
+  --fg-muted: #7c6f9e;
+  --fg-subtle: #2d2a40;
+  --accent: #a855f7;
+  --accent-hover: #9333ea;
+  --accent-glow: rgba(168, 85, 247, 0.15);
+  --border: #1e1a2e;
+  --border-accent: #a855f7;
+  --tag-bg: #1e1a2e;
+  --tag-fg: #c084fc;
+}
+
+/* ============================================
+   LIGHT MODE OVERRIDES
+   ============================================ */
+.light[data-mode="engineer"],
+.light [data-mode="engineer"] {
+  --bg: #f8fafc;
+  --bg-secondary: #f1f5f9;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f8fafc;
+  --fg: #0f172a;
+  --fg-muted: #64748b;
+  --fg-subtle: #cbd5e1;
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --accent-glow: rgba(37, 99, 235, 0.1);
+  --border: #e2e8f0;
+  --border-accent: #2563eb;
+  --tag-bg: #f1f5f9;
+  --tag-fg: #475569;
+}
+
+.light[data-mode="designer"],
+.light [data-mode="designer"] {
+  --bg: #faf8ff;
+  --bg-secondary: #f5f0ff;
+  --bg-card: #ffffff;
+  --bg-card-hover: #faf8ff;
+  --fg: #1e0a3c;
+  --fg-muted: #7c3aed;
+  --fg-subtle: #e9d5ff;
+  --accent: #9333ea;
+  --accent-hover: #7c3aed;
+  --accent-glow: rgba(147, 51, 234, 0.1);
+  --border: #e9d5ff;
+  --border-accent: #9333ea;
+  --tag-bg: #f5f0ff;
+  --tag-fg: #7c3aed;
+}
+
+/* ============================================
+   BASE STYLES
+   ============================================ */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  transition: background-color 0.4s ease, color 0.4s ease;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+[data-mode="engineer"] body,
+[data-mode="engineer"] {
+  font-family: var(--font-mono);
+}
+
+[data-mode="designer"] body,
+[data-mode="designer"] {
+  font-family: var(--font-sans);
+}
+
+/* ============================================
+   SCROLLBAR
+   ============================================ */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--fg-subtle);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+.text-accent {
+  color: var(--accent);
+}
+
+.bg-card {
+  background-color: var(--bg-card);
+}
+
+.border-custom {
+  border-color: var(--border);
+}
+
+.text-muted {
+  color: var(--fg-muted);
+}
+
+/* Glow effect */
+.glow {
+  box-shadow: 0 0 20px var(--accent-glow);
+}
+
+/* Section label style */
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
+/* Tag pill */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 10px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-family: var(--font-mono);
+  background-color: var(--tag-bg);
+  color: var(--tag-fg);
+  border: 1px solid var(--border);
+}
+
+/* Animated underline */
+.hover-underline {
+  position: relative;
+}
+
+.hover-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--accent);
+  transition: width 0.3s ease;
+}
+
+.hover-underline:hover::after {
+  width: 100%;
 }

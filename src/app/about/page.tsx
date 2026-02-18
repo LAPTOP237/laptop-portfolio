@@ -44,7 +44,7 @@ export default function AboutPage() {
                             }}
                         >
                             <Image
-                                src="/maphoto.jfif"
+                                src="/maphoto.jpg"
                                 alt="Alain Pascal LINJOUOM"
                                 fill
                                 className="object-cover object-top"
